@@ -1,5 +1,5 @@
 import html from "./modal.html";
-import './modal.css'
+import './modal.css';
 
 
 const rootElement = document.getElementById('modal');

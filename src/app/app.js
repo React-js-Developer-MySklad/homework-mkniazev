@@ -5,7 +5,7 @@ import './app.css'
 const rootElement = document.getElementById('root');
 rootElement.innerHTML = html;
 
-appData = [
+const appData = [
     {
         id: crypto.randomUUID(),
         name: "ООО Сайгак",
@@ -63,3 +63,7 @@ appData = [
         kpp: "660201009"
     }
 ]
+
+export function getAppData() {
+    return appData;
+}
