@@ -67,3 +67,27 @@ const appData = [
 export function getAppData() {
     return appData;
 }
+
+export const AppDataChangeEvent = {
+    subscribers: [],
+    subscribe: function(fn) {
+        this.subscribers.push(fn)
+    },
+    fire: function() {
+        this.subscribers.forEach(fn => fn())
+    }
+}
+
+export function addAddDataElement(name, inn, address, kpp) {
+    const newElement = {
+        id: crypto.randomUUID(),
+        name: name,
+        inn: inn,
+        address: address,
+        kpp, kpp
+    };
+    appData.push(newElement);
+
+    AppDataChangeEvent.fire();
+}
+

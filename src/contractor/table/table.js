@@ -1,10 +1,11 @@
 import html from "./table.html";
 import './table.css'
 
-import { getAppData } from "../../app/app"; // TODO use to retrieve app data
+import { getAppData, AppDataChangeEvent } from "../../app/app";
 
 const rootElement = document.getElementById('table');
 rootElement.innerHTML = html;
+
 
 const tableHeadElement = document.getElementById("table-head");
 tableHeadElement.classList.add("text-xs", "text-gray-600", "uppercase");
@@ -12,9 +13,23 @@ tableHeadElement.appendChild(createTableHead());
 
 const tableBodyElement = document.getElementById("table-body");
 tableBodyElement.classList.add("text-sm");
-getAppData().forEach(data => {
-    tableBodyElement.appendChild(createTableRow(data));
-});
+drawTable();
+
+AppDataChangeEvent.subscribe(() => {
+    clearTable();
+    drawTable();
+})
+
+function clearTable() {
+    tableBodyElement.innerHTML = "";
+}
+
+function drawTable() {    
+    getAppData().forEach(data => {
+        tableBodyElement.appendChild(createTableRow(data));
+    });
+}
+
 
 function createTableHead() {
     const tr = document.createElement("tr");
@@ -39,7 +54,6 @@ function createTableHeadData(columnName) {
 }
 
 function createTableRow(data) {
-    console.log(data)
     const tr = document.createElement("tr");
     tr.classList.add("border-b", "border-gray-200");
 
