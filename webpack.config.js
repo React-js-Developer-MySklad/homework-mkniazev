@@ -6,7 +6,6 @@ const {CleanWebpackPlugin} = require("clean-webpack-plugin");
 module.exports = {
     entry: './src/main.js',
     module: {
-
         rules: [
             {
                 test: /\.css$/i,
