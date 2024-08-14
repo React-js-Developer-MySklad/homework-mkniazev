@@ -78,7 +78,7 @@ export const AppDataChangeEvent = {
     }
 }
 
-export function addAddDataElement(name, inn, address, kpp) {
+export function addDataElement(name, inn, address, kpp) {
     const newElement = {
         id: crypto.randomUUID(),
         name: name,
@@ -89,5 +89,12 @@ export function addAddDataElement(name, inn, address, kpp) {
     appData.push(newElement);
 
     AppDataChangeEvent.fire();
+}
+
+export function deleteDataElement(id) {
+    let idx = appData.findIndex((el) => el.id === id)
+    if (idx > -1) {
+        appData.splice(idx, 1)
+    }
 }
 

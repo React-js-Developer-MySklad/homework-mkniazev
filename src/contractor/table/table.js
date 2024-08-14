@@ -1,7 +1,7 @@
 import html from "./table.html";
 import './table.css'
 
-import { getAppData, AppDataChangeEvent } from "../../app/app";
+import { getAppData, AppDataChangeEvent, deleteDataElement } from "../../app/app";
 
 const rootElement = document.getElementById('table');
 rootElement.innerHTML = html;
@@ -19,6 +19,11 @@ AppDataChangeEvent.subscribe(() => {
     clearTable();
     drawTable();
 })
+
+function redrawTable() {
+    clearTable();
+    drawTable();
+}
 
 function clearTable() {
     tableBodyElement.innerHTML = "";
@@ -79,6 +84,11 @@ function createTableRow(data) {
     deleteButton.classList.add("font-medium", "text-blue-600", "hover:underline");
     deleteButton.href = "#";
     deleteButton.innerHTML = "Удалить";
+
+    deleteButton.addEventListener("click", () => {
+        deleteDataElement(data.id)
+        redrawTable();
+    })
 
     deletion.appendChild(deleteButton)
 
