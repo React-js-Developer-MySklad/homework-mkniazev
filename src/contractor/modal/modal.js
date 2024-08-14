@@ -7,11 +7,14 @@ const rootElement = document.getElementById('modal');
 rootElement.innerHTML = html;
 
 const form = document.forms.addContractorForm
-form.onsubmit = function () {
+form.onsubmit = function (event) {
+    event.preventDefault(true);
+
     addAddDataElement(
         form.elements.name.value,
         form.elements.inn.value,
         form.elements.address.value,
         form.elements.kpp.value
-    )
+    );
 }
+
