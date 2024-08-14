@@ -96,5 +96,17 @@ export function deleteDataElement(id) {
     if (idx > -1) {
         appData.splice(idx, 1)
     }
+    
+    AppDataChangeEvent.fire();
+}
+
+export function updateDataElement(id , name, inn, address, kpp) {
+    let idx = appData.findIndex((el) => el.id === id)
+    appData[idx].name = name
+    appData[idx].inn = inn
+    appData[idx].address = address
+    appData[idx].kpp = kpp
+
+    AppDataChangeEvent.fire();
 }
 

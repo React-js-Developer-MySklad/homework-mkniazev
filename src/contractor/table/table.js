@@ -2,8 +2,9 @@ import html from "./table.html";
 import './table.css'
 
 import { getAppData, AppDataChangeEvent, deleteDataElement } from "../../app/app";
+import { showModal } from "../updateDataModal/updateDataModal";
 
-const rootElement = document.getElementById('table');
+const rootElement = document.getElementById('table-dock');
 rootElement.innerHTML = html;
 
 
@@ -19,11 +20,6 @@ AppDataChangeEvent.subscribe(() => {
     clearTable();
     drawTable();
 })
-
-function redrawTable() {
-    clearTable();
-    drawTable();
-}
 
 function clearTable() {
     tableBodyElement.innerHTML = "";
@@ -85,10 +81,6 @@ function createTableRow(data) {
     deleteButton.href = "#";
     deleteButton.innerHTML = "Удалить";
 
-    deleteButton.addEventListener("click", () => {
-        deleteDataElement(data.id)
-        redrawTable();
-    })
 
     deletion.appendChild(deleteButton)
 
@@ -98,5 +90,14 @@ function createTableRow(data) {
     tr.appendChild(address);
     tr.appendChild(kpp);
     tr.appendChild(deletion);
+
+
+    deleteButton.addEventListener("click", () => {
+        deleteDataElement(data.id);
+    })
+
+    tr.addEventListener('dblclick', () => {
+        showModal(data);
+    })
     return tr;
 }

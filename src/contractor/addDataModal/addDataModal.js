@@ -1,12 +1,13 @@
-import html from "./modal.html";
-import './modal.css';
+import html from "./addDataModal.html";
+import './addDataModal.css';
 
 import { addDataElement } from "../../app/app";
 
-const rootElement = document.getElementById('modal');
+const rootElement = document.getElementById('add-data-modal-dock');
 rootElement.innerHTML = html;
 
 const form = document.forms.addContractorForm
+
 form.onsubmit = function (event) {
     event.preventDefault(true);
 
@@ -17,4 +18,3 @@ form.onsubmit = function (event) {
         form.elements.kpp.value
     );
 }
-
