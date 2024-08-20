@@ -2,7 +2,7 @@ import React from 'react';
 import logo from '/public/logo.png';
 import Button from '../button/Button';
 
-export default function Header() {
+export default function Header(props) {
     const styles = {
         header: {
             display: "flex",
@@ -21,7 +21,7 @@ export default function Header() {
     return (
         <header style={styles.header}>
             <img style={styles.logo} src={logo} alt="MoySklad Logo" />
-            <Button/>
+            <Button onClick={props.onOpenModal}/>
         </header>
     )
 }

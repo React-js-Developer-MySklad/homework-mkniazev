@@ -1,10 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "../components/header/Header";
 import Footer from "../components/footer/Footer";
 import Table from "../components/table/Table";
+import Modal from "../components/modal/Modal";
 
 export default function App() {
-    const data = [
+
+    const createEmptyModalData = () => {
+        return {
+            id: "",
+            name: "",
+            inn: "",
+            address: "",
+            kpp: ""
+        }
+    }
+
+    const [isModalOpen, setModalOpen] = useState(true);
+    const [modalData, setModalData] = useState(createEmptyModalData())
+
+    const [data, setData] = useState([
         {
             id: crypto.randomUUID(),
             name: "ООО Сайгак",
@@ -61,14 +76,85 @@ export default function App() {
             address: "Проспект Маяковского, 19, кв. 18, г. Омск, 644050",
             kpp: "660201009"
         }
-    ]
+    ]);
+
+    const onRowRemove = (id) => {
+        const newData = data.filter(row => row.id != id);
+
+        setData(newData)
+    }
+
+    const onRowAdd = (name, inn, address, kpp) => {
+        const id = crypto.randomUUID()
+
+        const newData = [...data, {
+            id,
+            name,
+            inn,
+            address,
+            kpp
+        }];
+
+        setData(newData);
+    }
+
+    const onRowUpdate = (id, name, inn, address, kpp) => {
+        const newData = data.map(row => {
+            if (id === row.id) {
+                return {
+                    id,
+                    name,
+                    inn,
+                    address,
+                    kpp
+                }
+            } else {
+                return row;
+            }
+        })
+
+        setData(newData);
+    }
+
+    const onCloseModal = () => {
+        setModalOpen(false)
+    }
+
+    const onOpenModal = (data) => {
+        if (data === null || data === undefined) {
+            setModalData(createEmptyModalData())
+        } else {
+            setModalData(data)
+        }
+
+        setModalOpen(true)
+    }
+
+    const onSubmitModal = () => {
+        if (modalData.inn === ""
+            || modalData.name === ""
+            || modalData.address === ""
+            || modalData.kpp === "") {
+            return;
+        } else {
+            if (modalData.id === "") {
+                onRowAdd(modalData.name, modalData.inn, modalData.address, modalData.kpp);
+            } else {
+                onRowUpdate(modalData.id, modalData.name, modalData.inn, modalData.address, modalData.kpp)
+            }
+        }
+
+        setModalData(createEmptyModalData())
+        setModalOpen(false)
+    }
 
 
     return (
         <>
-            <Header />
+            <Header onOpenModal={onOpenModal} />
             <main>
-                <Table data={data} />
+                <Table data={data} onRowRemove={onRowRemove} onOpenModal={onOpenModal} />
+                <Modal data={modalData} setModalData={setModalData} isModalOpen={isModalOpen} onCloseModal={onCloseModal} onSubmitModal={onSubmitModal} />
             </main>
             <Footer />
         </>
