@@ -21,7 +21,7 @@ export default function Header(props) {
     return (
         <header style={styles.header}>
             <img style={styles.logo} src={logo} alt="MoySklad Logo" />
-            <Button onClick={props.onOpenModal}/>
+            <Button onClick={(e) => props.onOpenModal(null)}/>
         </header>
     )
 }
