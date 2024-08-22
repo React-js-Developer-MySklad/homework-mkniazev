@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import ContractorAPIContext from "./AppContext";
 import Header from "../components/header/Header";
 import Footer from "../components/footer/Footer";
 import Table from "../components/table/Table";
 import Modal from "../components/modal/Modal";
 
 export default function App() {
+
+    const apiContext = useContext(ContractorAPIContext)
 
     const createEmptyModalData = () => {
         return {
@@ -16,43 +19,13 @@ export default function App() {
         }
     }
 
-    const createTestTableData = () => {
-        return [
-            {
-                id: crypto.randomUUID(),
-                name: "ООО Сайгак",
-                inn: "4562349580",
-                address: "Улица Ленина, 25, кв. 17, г. Москва, 123456",
-                kpp: "772501001"
-            },
-            {
-                id: crypto.randomUUID(),
-                name: "ОАО Дивный Новый Мир",
-                inn: "2845830381",
-                address: "Проспект Мира, 10, кв. 5, г. Санкт-Петербург, 191028",
-                kpp: "502801002"
-            },
-            {
-                id: crypto.randomUUID(),
-                name: "ИП Петров А.К.",
-                inn: "102475839596",
-                address: "Улица Красная, 12, кв. 34, г. Казань, 420015",
-                kpp: "781301004"
-            },
-            {
-                id: crypto.randomUUID(),
-                name: "АО Банк",
-                inn: "3841924936",
-                address: "Проспект Победы, 8, кв. 21, г. Нижний Новгород, 603000",
-                kpp: "540601005"
-            }
-        ]
-    }
-
     const [isModalOpen, setModalOpen] = useState(false);
     const [modalData, setModalData] = useState(createEmptyModalData())
+    const [data, setData] = useState([]);
 
-    const [data, setData] = useState(createTestTableData());
+    useEffect(() => {
+        apiContext.getData(setData)    
+    }, [])
 
     const onRowRemove = (id) => {
         const newData = data.filter(row => row.id != id);
