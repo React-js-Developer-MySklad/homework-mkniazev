@@ -80,17 +80,17 @@ export default function App() {
         setModalOpen(true)
     }
 
-    const onSubmitModal = () => {
-        if (modalData.inn === ""
-            || modalData.name === ""
-            || modalData.address === ""
-            || modalData.kpp === "") {
+    const onSubmitModal = (data) => {
+        if (data.inn === ""
+            || data.name === ""
+            || data.address === ""
+            || data.kpp === "") {
             return;
         } else {
-            if (modalData.id === "") {
-                onRowAdd(modalData.name, modalData.inn, modalData.address, modalData.kpp);
+            if (data.id === "") {
+                onRowAdd(data.name, data.inn, data.address, data.kpp);
             } else {
-                onRowUpdate(modalData.id, modalData.name, modalData.inn, modalData.address, modalData.kpp)
+                onRowUpdate(data.id, data.name, data.inn, data.address, data.kpp)
             }
         }
         
@@ -103,7 +103,7 @@ export default function App() {
             <Header onOpenModal={onOpenModal} />
             <main>
                 <Table data={data} onRowRemove={onRowRemove} onOpenModal={onOpenModal} />
-                <Modal data={modalData} setModalData={setModalData} isModalOpen={isModalOpen} onCloseModal={onCloseModal} onSubmitModal={onSubmitModal} />
+                <Modal data={modalData} isModalOpen={isModalOpen} onCloseModal={onCloseModal} onSubmitModal={onSubmitModal} />
             </main>
             <Footer />
         </>
