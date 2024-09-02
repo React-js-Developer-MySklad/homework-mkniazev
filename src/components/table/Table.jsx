@@ -16,7 +16,7 @@ export default function Table(props) {
                 <tbody>
                     {props.data.map(data => {
                         return (
-                            <TableRow key={data.id} data={data} onRowRemove={props.onRowRemove} onDoubleClick={props.onOpenModal}/>
+                            <TableRow key={data.id} data={data} onRowRemove={props.onRowRemove} onDoubleClick={props.onOpenModal} />
                         )
                     })}
                 </tbody>

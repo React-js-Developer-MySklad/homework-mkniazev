@@ -1,14 +1,11 @@
-import React, { useState, useContext, useEffect } from "react";
-import ContractorAPIContext from "./ContractorAPIContext";
+import React, { useState, useEffect } from "react";
 import Header from "../components/header/Header";
 import Footer from "../components/footer/Footer";
 import Table from "../components/table/Table";
 import Modal from "../components/modal/Modal";
+import { useData } from "../hooks/useData/data.hook";
 
 export default function App() {
-
-    const apiContext = useContext(ContractorAPIContext)
-
     const createEmptyModalData = () => {
         return {
             id: "",
@@ -21,10 +18,10 @@ export default function App() {
 
     const [isModalOpen, setModalOpen] = useState(false);
     const [modalData, setModalData] = useState(createEmptyModalData())
-    const [data, setData] = useState([]);
+    const { data, fetchInitialData, setData } = useData();
 
     useEffect(() => {
-        apiContext.getData(setData)    
+        fetchInitialData()
     }, [])
 
     const onRowRemove = (id) => {
@@ -93,10 +90,9 @@ export default function App() {
                 onRowUpdate(modalData.id, modalData.name, modalData.inn, modalData.address, modalData.kpp)
             }
         }
-        
+
         onCloseModal();
     }
-
 
     return (
         <>
